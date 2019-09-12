@@ -1,0 +1,63 @@
+{
+    "name": "orkhanahmadov/laravel-currencylayer",
+    "description": "Laravel package for CurrencyLayer",
+    "keywords": [
+        "orkhanahmadov",
+        "laravel",
+        "currency",
+        "currencylayer",
+        "laravel-currencylayer"
+    ],
+    "homepage": "https://github.com/orkhanahmadov/laravel-currencylayer",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Orkhan Ahmadov",
+            "email": "ahmadov90@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "ext-json": "*",
+        "illuminate/container": "5.5.*|5.8.*|^6.0",
+        "illuminate/contracts": "5.5.*|5.8.*|^6.0",
+        "illuminate/database": "5.5.*|5.8.*|^6.0",
+        "illuminate/support": "5.5.*|5.8.*|^6.0",
+        "oceanapplications/currencylayer-php-client": "^1.4"
+    },
+    "require-dev": {
+        "orchestra/testbench": "3.5.*|3.8.*|^4.0",
+        "phpunit/phpunit": "^6.0|^7.0|^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Orkhanahmadov\\LaravelCurrencylayer\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Orkhanahmadov\\LaravelCurrencylayer\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Orkhanahmadov\\LaravelCurrencylayer\\LaravelCurrencylayerServiceProvider"
+            ],
+            "aliases": {
+                "LaravelCurrencylayer": "Orkhanahmadov\\LaravelCurrencylayer\\LaravelCurrencylayerFacade"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
