@@ -3,9 +3,9 @@
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
 use CurrencylayerFacade;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 
 class FacadeTest extends TestCase
 {

@@ -21,7 +21,7 @@ class FakeClient extends client
      */
     private function jsonFixture(string $fileName): array
     {
-        return json_decode(file_get_contents(__DIR__ . '/__fixtures__/' . $fileName . '.json'), true);
+        return json_decode(file_get_contents(__DIR__.'/__fixtures__/'.$fileName.'.json'), true);
     }
 
     /**

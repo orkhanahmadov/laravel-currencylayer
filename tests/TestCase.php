@@ -2,9 +2,9 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
-use CreateCurrencylayerCurrenciesTable;
 use CreateCurrencylayerRatesTable;
 use Illuminate\Foundation\Application;
+use CreateCurrencylayerCurrenciesTable;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orkhanahmadov\LaravelCurrencylayer\CurrencylayerFacade;
 use Orkhanahmadov\LaravelCurrencylayer\LaravelCurrencylayerServiceProvider;
@@ -17,7 +17,7 @@ abstract class TestCase extends Orchestra
 
         $this->setUpDatabase($this->app);
 
-        $this->withFactories(__DIR__ . '/../database/factories');
+        $this->withFactories(__DIR__.'/../database/factories');
     }
 
     /**
@@ -27,10 +27,10 @@ abstract class TestCase extends Orchestra
      */
     protected function setUpDatabase($app)
     {
-        include_once __DIR__ . '/../database/migrations/create_currencylayer_currencies_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_currencylayer_currencies_table.php.stub';
         (new CreateCurrencylayerCurrenciesTable())->up();
 
-        include_once __DIR__ . '/../database/migrations/create_currencylayer_currency_rates_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_currencylayer_currency_rates_table.php.stub';
         (new CreateCurrencylayerRatesTable())->up();
     }
 
