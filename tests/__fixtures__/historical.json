@@ -8,9 +8,6 @@
     "source": "USD",
     "quotes": {
         "USDAED": 3.67266,
-        "USDALL": 96.848749,
-        "USDAMD": 475.798293,
-        "USDANG": 1.79,
-        "USDARS": 2.918965
+        "USDAMD": 475.798293
     }
 }

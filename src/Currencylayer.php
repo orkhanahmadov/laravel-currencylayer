@@ -5,7 +5,6 @@ namespace Orkhanahmadov\LaravelCurrencylayer;
 use Carbon\Carbon;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 use OceanApplications\currencylayer\client;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 
@@ -15,10 +14,6 @@ class Currencylayer
      * @var client
      */
     private $client;
-    /**
-     * @var string|null
-     */
-    private $date = null;
 
     /**
      * Currencylayer constructor.
@@ -30,99 +25,96 @@ class Currencylayer
         $this->client = $client;
     }
 
+    /**
+     * @param Currency|string $source
+     * @param mixed ...$currencies
+     *
+     * @return array|float
+     */
     public function live($source, ...$currencies)
     {
-        $currencies = Arr::flatten($currencies);
-
-        $response = $this->apiRate($source, implode(',', $currencies));
-
-        $rates = [];
-        $sourceCurrency = Currency::firstOrCreate(['code' => $source]);
-        foreach ($response['quotes'] as $code => $rate) {
-            $targetCurrency = Currency::firstOrCreate(['code' => $targetCurrencyCode = substr($code, -3)]);
-
-            $createdRate = $sourceCurrency->rates()->create([
-                'target_currency_id' => $targetCurrency->id,
-                'rate' => $rate,
-                'timestamp' => $response['timestamp'],
-            ]);
-            $rates[$targetCurrencyCode] = $createdRate->rate;
+        if (! $source instanceof Currency) {
+            $source = Currency::firstOrCreate(['code' => $source]);
         }
+
+        $currencies = Arr::flatten($currencies);
+        $apiResponse = $this->apiRates($source, $currencies);
+
+        $rates = $this->createRates($source, $apiResponse['quotes'], $apiResponse['timestamp']);
 
         return count($currencies) === 1 ? array_values($rates)[0] : $rates;
     }
 
-    private function apiRate(string $source, string $currencies, ?string $date = null): array
+    /**
+     * @param Currency|string $source
+     * @param Carbon|string $date
+     * @param mixed ...$currencies
+     *
+     * @return array|float
+     */
+    public function rateFor($source, $date, ...$currencies)
     {
-        $client = $this->client->source($source)->currencies($currencies);
+        if (! $source instanceof Currency) {
+            $source = Currency::firstOrCreate(['code' => $source]);
+        }
 
-        return $date ? $client->date($date)->historical() : $client->live();
+        if (! $date instanceof Carbon) {
+            $date = Carbon::parse($date);
+        }
+
+        $currencies = Arr::flatten($currencies);
+        $apiResponse = $this->apiRates($source, $currencies, $date);
+
+        $rates = $this->createRates($source, $apiResponse['quotes'], $apiResponse['timestamp']);
+
+        return count($currencies) === 1 ? array_values($rates)[0] : $rates;
     }
 
     /**
-     * @param Carbon|string $date
+     * @param Currency $source
+     * @param array $quotes
+     * @param int $timestamp
      *
-     * @return Currencylayer
+     * @return array
      */
-    public function date($date): self
+    private function createRates(Currency $source, array $quotes, int $timestamp): array
     {
-        $this->date = $date instanceof Carbon ?
-            $date->format('Y-m-d') : Carbon::parse($date)->format('Y-m-d');
+        $rates = [];
 
-        return $this;
+        foreach ($quotes as $code => $rate) {
+            $targetCurrency = Currency::firstOrCreate(['code' => $targetCurrencyCode = substr($code, -3)]);
+
+            $existingRate = $source->rates()->where([
+                'target_currency_id' => $targetCurrency->id,
+                'timestamp' => Carbon::parse($timestamp),
+            ])->first();
+
+            if ($existingRate) {
+                $rates[$targetCurrencyCode] = $existingRate->rate;
+            } else {
+                $createdRate = $source->rates()->create([
+                    'target_currency_id' => $targetCurrency->id,
+                    'rate' => $rate,
+                    'timestamp' => $timestamp,
+                ]);
+                $rates[$targetCurrencyCode] = $createdRate->rate;
+            }
+        }
+
+        return $rates;
     }
 
-//    /**
-//     * @return self
-//     */
-//    public function fetch(): self
-//    {
-//        $this->shouldFetch = true;
-//        return $this;
-//    }
+    /**
+     * @param Currency $source
+     * @param array $currencies
+     * @param Carbon|null $date
+     *
+     * @return array
+     */
+    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): array
+    {
+        $client = $this->client->source($source->code)->currencies(implode(',', $currencies));
 
-//    /**
-//     * @param Currency|string $source
-//     * @param Currency|string $target
-//     * @param Carbon|string|null $date
-//     *
-//     * @return float
-//     */
-//    public function rate($source, $target, $date = null)
-//    {
-//        if (! $source instanceof Currency) {
-//            $source = Currency::where('code', $source)->first();
-//        }
-//
-//        if (! $target instanceof Currency) {
-//            $target = Currency::where('code', $target)->first();
-//        }
-//
-//        if (! $source || ! $target) {
-//            throw new \InvalidArgumentException(
-//                'Source or target currency is not available. Did you fetch all currencies? ' .
-//                'Call currencies() method to fetch all available currencies.'
-//            );
-//        }
-//
-//        if (! $date) {
-//            $this->fetch($source->code, $target->code);
-//        }
-//
-//        return $source->rate($target)->rate;
-//    }
-
-
-
-//    public function currencies()
-//    {
-//        $response = $this->client->list();
-//
-//        foreach ($response['currencies'] as $code => $name) {
-//            $currency = Currency::where('code', $code)->first();
-//            if (! $currency) {
-//                Currency::create(['code' => $code, 'name' => $name]);
-//            }
-//        }
-//    }
+        return $date ? $client->date($date->format('Y-m-d'))->historical() : $client->live();
+    }
 }
