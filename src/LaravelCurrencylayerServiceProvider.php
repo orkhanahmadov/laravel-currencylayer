@@ -5,6 +5,9 @@ namespace Orkhanahmadov\LaravelCurrencylayer;
 use Illuminate\Support\ServiceProvider;
 use OceanApplications\currencylayer\client;
 
+/**
+ * @codeCoverageIgnore
+ */
 class LaravelCurrencylayerServiceProvider extends ServiceProvider
 {
     /**

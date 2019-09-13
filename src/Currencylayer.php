@@ -33,11 +33,11 @@ class Currencylayer
      */
     public function live($source, ...$currencies)
     {
+        $currencies = Arr::flatten($currencies);
         if (! $source instanceof Currency) {
             $source = Currency::firstOrCreate(['code' => $source]);
         }
 
-        $currencies = Arr::flatten($currencies);
         $apiResponse = $this->apiRates($source, $currencies);
 
         $rates = $this->createRates($source, $apiResponse['quotes'], $apiResponse['timestamp']);
@@ -54,15 +54,14 @@ class Currencylayer
      */
     public function rate($source, $date, ...$currencies)
     {
+        $currencies = Arr::flatten($currencies);
         if (! $source instanceof Currency) {
             $source = Currency::firstOrCreate(['code' => $source]);
         }
-
         if (! $date instanceof Carbon) {
             $date = Carbon::parse($date);
         }
 
-        $currencies = Arr::flatten($currencies);
         $apiResponse = $this->apiRates($source, $currencies, $date);
 
         $rates = $this->createRates($source, $apiResponse['quotes'], $apiResponse['timestamp']);
