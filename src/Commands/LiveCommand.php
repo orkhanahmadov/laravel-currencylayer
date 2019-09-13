@@ -37,8 +37,6 @@ class LiveCommand extends Command
      * Execute the console command.
      *
      * @param Currencylayer $currencylayer
-     *
-     * @return mixed
      */
     public function handle(Currencylayer $currencylayer)
     {
@@ -49,7 +47,7 @@ class LiveCommand extends Command
             $this->argument('currencies')
         );
 
-        $header = ['Currency', 'Value'];
+        $header = ['Currency', 'Rate'];
         if (is_array($rates)) {
             $this->table($header, [array_keys($rates), array_values($rates)]);
         } else {
