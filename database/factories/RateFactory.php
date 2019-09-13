@@ -2,10 +2,10 @@
 
 use Carbon\Carbon;
 use Faker\Generator as Faker;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 
-/**
+/*
  * @var \Illuminate\Database\Eloquent\Factory $factory
  */
 $factory->define(Rate::class, function (Faker $faker) {
