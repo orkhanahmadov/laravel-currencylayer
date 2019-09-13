@@ -44,11 +44,11 @@ class RateCommand extends Command
     public function handle(Currencylayer $currencylayer)
     {
         $rates = $currencylayer->rate(
-            /** @var string */
+            /* @var string */
             $this->argument('source'),
-            /** @var string */
+            /* @var string */
             $this->argument('date'),
-            /** @var array */
+            /* @var array */
             $this->argument('currencies')
         );
 
