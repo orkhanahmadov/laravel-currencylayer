@@ -3,6 +3,7 @@
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
 use Orchestra\Testbench\TestCase as Orchestra;
+use Orkhanahmadov\LaravelCurrencylayer\CurrencylayerFacade;
 use Orkhanahmadov\LaravelCurrencylayer\LaravelCurrencylayerServiceProvider;
 
 abstract class TestCase extends Orchestra
@@ -25,6 +26,18 @@ abstract class TestCase extends Orchestra
     {
         return [
             LaravelCurrencylayerServiceProvider::class,
+        ];
+    }
+
+    /**
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return array
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            'CurrencylayerFacade' => CurrencylayerFacade::class,
         ];
     }
 

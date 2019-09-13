@@ -1,6 +1,6 @@
 {
     "name": "orkhanahmadov/laravel-currencylayer",
-    "description": "Laravel package for CurrencyLayer",
+    "description": "Laravel package for currencylayer.com",
     "keywords": [
         "orkhanahmadov",
         "laravel",
@@ -51,7 +51,7 @@
                 "Orkhanahmadov\\LaravelCurrencylayer\\LaravelCurrencylayerServiceProvider"
             ],
             "aliases": {
-                "LaravelCurrencylayer": "Orkhanahmadov\\LaravelCurrencylayer\\LaravelCurrencylayerFacade"
+                "LaravelCurrencylayer": "Orkhanahmadov\\LaravelCurrencylayer\\CurrencylayerFacade"
             }
         }
     },
