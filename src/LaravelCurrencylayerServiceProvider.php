@@ -4,6 +4,8 @@ namespace Orkhanahmadov\LaravelCurrencylayer;
 
 use Illuminate\Support\ServiceProvider;
 use OceanApplications\currencylayer\client;
+use Orkhanahmadov\LaravelCurrencylayer\Commands\LiveCommand;
+use Orkhanahmadov\LaravelCurrencylayer\Commands\RateCommand;
 
 /**
  * @codeCoverageIgnore
@@ -45,5 +47,12 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
         $this->app->singleton('currencylayer', function () {
             return new Currencylayer(new client(config('currencylayer.access_key')));
         });
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                LiveCommand::class,
+                RateCommand::class,
+            ]);
+        }
     }
 }

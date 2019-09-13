@@ -82,21 +82,20 @@ class Currencylayer
         foreach ($quotes as $code => $rate) {
             $targetCurrency = Currency::firstOrCreate(['code' => $targetCurrencyCode = substr($code, -3)]);
 
-            $existingRate = $source->rates()->where([
+            $currencyRate = $source->rates()->where([
                 'target_currency_id' => $targetCurrency->id,
                 'timestamp' => Carbon::parse($timestamp),
             ])->first();
 
-            if ($existingRate) {
-                $rates[$targetCurrencyCode] = $existingRate->rate;
-            } else {
-                $createdRate = $source->rates()->create([
+            if (! $currencyRate) {
+                $currencyRate = $source->rates()->create([
                     'target_currency_id' => $targetCurrency->id,
                     'rate' => $rate,
                     'timestamp' => $timestamp,
                 ]);
-                $rates[$targetCurrencyCode] = $createdRate->rate;
             }
+
+            $rates[$targetCurrencyCode] = $currencyRate->rate;
         }
 
         return $rates;
