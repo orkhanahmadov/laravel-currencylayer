@@ -17,6 +17,6 @@ $factory->define(Rate::class, function (Faker $faker) {
             return factory(Currency::class)->create();
         },
         'rate' => $faker->randomFloat(12, 1, 10),
-        'rate_for' => Carbon::now()->unix(),
+        'timestamp' => Carbon::now()->unix(),
     ];
 });

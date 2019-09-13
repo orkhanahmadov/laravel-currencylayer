@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rate extends Model
 {
-    protected $table = 'currencylayer_currency_rates';
+    protected $table = 'currencylayer_rates';
 
     public $timestamps = false;
 
     protected $fillable = [
         'target_currency_id',
         'rate',
-        'rate_for',
+        'timestamp',
     ];
 
     protected $dates = [
-        'rate_for',
+        'timestamp',
     ];
 
     protected $casts = [

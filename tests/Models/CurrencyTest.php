@@ -8,12 +8,12 @@ use Orkhanahmadov\LaravelCurrencylayer\Tests\TestCase;
 
 class CurrencyTest extends TestCase
 {
-    public function testHasManyTargetRates()
+    public function testHasManyRates()
     {
         $currency = factory(Currency::class)->create();
         factory(Rate::class, 2)->create(['source_currency_id' => $currency->id]);
 
-        $this->assertCount(2, $currency->targetRates);
-        $this->assertInstanceOf(Rate::class, $currency->targetRates->first());
+        $this->assertCount(2, $currency->rates);
+        $this->assertInstanceOf(Rate::class, $currency->rates->first());
     }
 }

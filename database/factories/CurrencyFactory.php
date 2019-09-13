@@ -9,6 +9,5 @@ use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 $factory->define(Currency::class, function (Faker $faker) {
     return [
         'code' => $faker->unique()->randomLetter,
-        'name' => $faker->sentence,
     ];
 });

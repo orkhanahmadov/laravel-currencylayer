@@ -6,9 +6,6 @@
     "source": "USD",
     "quotes": {
         "USDAED": 3.673103,
-        "USDAFN": 78.550477,
-        "USDALL": 110.449828,
-        "USDAMD": 476.340291,
-        "USDANG": 1.76465
+        "USDAMD": 476.340291
     }
 }

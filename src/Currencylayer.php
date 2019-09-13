@@ -5,6 +5,7 @@ namespace Orkhanahmadov\LaravelCurrencylayer;
 use Carbon\Carbon;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use OceanApplications\currencylayer\client;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 
@@ -29,6 +30,35 @@ class Currencylayer
         $this->client = $client;
     }
 
+    public function live($source, ...$currencies)
+    {
+        $currencies = Arr::flatten($currencies);
+
+        $response = $this->apiRate($source, implode(',', $currencies));
+
+        $rates = [];
+        $sourceCurrency = Currency::firstOrCreate(['code' => $source]);
+        foreach ($response['quotes'] as $code => $rate) {
+            $targetCurrency = Currency::firstOrCreate(['code' => $targetCurrencyCode = substr($code, -3)]);
+
+            $createdRate = $sourceCurrency->rates()->create([
+                'target_currency_id' => $targetCurrency->id,
+                'rate' => $rate,
+                'timestamp' => $response['timestamp'],
+            ]);
+            $rates[$targetCurrencyCode] = $createdRate->rate;
+        }
+
+        return count($currencies) === 1 ? array_values($rates)[0] : $rates;
+    }
+
+    private function apiRate(string $source, string $currencies, ?string $date = null): array
+    {
+        $client = $this->client->source($source)->currencies($currencies);
+
+        return $date ? $client->date($date)->historical() : $client->live();
+    }
+
     /**
      * @param Carbon|string $date
      *
@@ -51,65 +81,48 @@ class Currencylayer
 //        return $this;
 //    }
 
-    /**
-     * @param Currency|string $source
-     * @param Currency|string $target
-     */
-    public function rate($source, $target)
-    {
-        if (! $source instanceof Currency) {
-            $source = Currency::where('code', $source)->first();
-        }
-
-        if (! $target instanceof Currency) {
-            $target = Currency::where('code', $target)->first();
-        }
-
-        if (! $source || ! $target) {
-            throw new \InvalidArgumentException(
-                'Source or target currency is not available. Did you fetch all currencies? ' .
-                'Call currencies() method to fetch all available currencies.'
-            );
-        }
-
-        $source->rates()->where('target_currency_id', $target->id)->latest()->first();
-
-//        $currencies = Arr::flatten($currencies);
+//    /**
+//     * @param Currency|string $source
+//     * @param Currency|string $target
+//     * @param Carbon|string|null $date
+//     *
+//     * @return float
+//     */
+//    public function rate($source, $target, $date = null)
+//    {
+//        if (! $source instanceof Currency) {
+//            $source = Currency::where('code', $source)->first();
+//        }
 //
-//        return $this->client
-//            ->source($source)
-//            ->currencies(implode(',', $currencies))
-//            ->live();
-    }
+//        if (! $target instanceof Currency) {
+//            $target = Currency::where('code', $target)->first();
+//        }
+//
+//        if (! $source || ! $target) {
+//            throw new \InvalidArgumentException(
+//                'Source or target currency is not available. Did you fetch all currencies? ' .
+//                'Call currencies() method to fetch all available currencies.'
+//            );
+//        }
+//
+//        if (! $date) {
+//            $this->fetch($source->code, $target->code);
+//        }
+//
+//        return $source->rate($target)->rate;
+//    }
 
-    public function fetch(string $source, ...$currencies)
-    {
-        $client = $this->client->source($source)->currencies(implode(',', Arr::flatten($currencies)));
-        $response = $this->date ? $client->date($this->date)->historical() : $client->live();
 
-        $sourceCurrency = Currency::where('code', $response['source'])->first();
 
-        foreach ($response['quotes'] as $code => $rate) {
-            $targetCurrency = Currency::where('code', substr($code, -3))->first();
-            if ($sourceCurrency && $targetCurrency) {
-                $sourceCurrency->targetRates()->create([
-                    'target_currency_id' => $targetCurrency->id,
-                    'rate' => $rate,
-                    'rate_for' => $response['timestamp'],
-                ]);
-            }
-        }
-    }
-
-    public function currencies()
-    {
-        $response = $this->client->list();
-
-        foreach ($response['currencies'] as $code => $name) {
-            $currency = Currency::where('code', $code)->first();
-            if (! $currency) {
-                Currency::create(['code' => $code, 'name' => $name]);
-            }
-        }
-    }
+//    public function currencies()
+//    {
+//        $response = $this->client->list();
+//
+//        foreach ($response['currencies'] as $code => $name) {
+//            $currency = Currency::where('code', $code)->first();
+//            if (! $currency) {
+//                Currency::create(['code' => $code, 'name' => $name]);
+//            }
+//        }
+//    }
 }
