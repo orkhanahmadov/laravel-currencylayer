@@ -3,10 +3,10 @@
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests\Commands;
 
 use OceanApplications\currencylayer\client;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
-use Orkhanahmadov\LaravelCurrencylayer\Tests\FakeClient;
 use Orkhanahmadov\LaravelCurrencylayer\Tests\TestCase;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+use Orkhanahmadov\LaravelCurrencylayer\Tests\FakeClient;
 
 class RateCommandTest extends TestCase
 {
