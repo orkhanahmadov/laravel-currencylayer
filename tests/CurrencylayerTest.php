@@ -4,9 +4,9 @@ namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
 use Carbon\Carbon;
 use OceanApplications\currencylayer\client;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 
 class CurrencylayerTest extends TestCase
 {
@@ -71,7 +71,7 @@ class CurrencylayerTest extends TestCase
             'source_currency_id' => $source->id,
             'target_currency_id' => $target->id,
             'timestamp' => 1568218086,
-            'rate' => 12.22222223213123
+            'rate' => 12.22222223213123,
         ]);
 
         $rate = $this->service->live($source, $target);
