@@ -2,18 +2,11 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
-use OceanApplications\currencylayer\client;
-use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orkhanahmadov\LaravelCurrencylayer\LaravelCurrencylayerServiceProvider;
 
 abstract class TestCase extends Orchestra
 {
-    /**
-     * @var Currencylayer
-     */
-    protected $service;
-
     protected function setUp(): void
     {
         parent::setUp();
@@ -21,12 +14,6 @@ abstract class TestCase extends Orchestra
         $this->setUpDatabase($this->app);
 
         $this->withFactories(__DIR__.'/../database/factories');
-
-        $this->app->bind(client::class, function () {
-            return new FakeClient();
-        });
-
-        $this->service = app(Currencylayer::class);
     }
 
     /**

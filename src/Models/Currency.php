@@ -20,9 +20,4 @@ class Currency extends Model
     {
         return $this->hasMany(Rate::class, 'source_currency_id');
     }
-
-    public function rate(Currency $target, $date = null)
-    {
-        return $this->targetRates()->where('target_currency_id', $target->id)->orderByDesc('rate_for')->first();
-    }
 }

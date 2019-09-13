@@ -52,7 +52,7 @@ class Currencylayer
      *
      * @return array|float
      */
-    public function rateFor($source, $date, ...$currencies)
+    public function rate($source, $date, ...$currencies)
     {
         if (! $source instanceof Currency) {
             $source = Currency::firstOrCreate(['code' => $source]);

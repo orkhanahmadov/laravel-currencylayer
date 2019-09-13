@@ -40,7 +40,7 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'currencylayer');
 
         $this->app->singleton('currencylayer', function () {
-            return new Currencylayer;
+            return new Currencylayer(new client(config('currencylayer.access_key')));
         });
     }
 }
