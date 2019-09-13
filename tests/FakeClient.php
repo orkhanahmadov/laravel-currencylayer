@@ -15,6 +15,16 @@ class FakeClient extends client
     }
 
     /**
+     * @param string $fileName
+     *
+     * @return array
+     */
+    private function jsonFixture(string $fileName): array
+    {
+        return json_decode(file_get_contents(__DIR__ . '/__fixtures__/' . $fileName . '.json'), true);
+    }
+
+    /**
      * @return array
      */
     public function live()
@@ -28,15 +38,5 @@ class FakeClient extends client
     public function historical()
     {
         return $this->jsonFixture('historical');
-    }
-
-    /**
-     * @param string $fileName
-     *
-     * @return array
-     */
-    private function jsonFixture(string $fileName): array
-    {
-        return json_decode(file_get_contents(__DIR__.'/__fixtures__/'.$fileName.'.json'), true);
     }
 }

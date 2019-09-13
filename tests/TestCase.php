@@ -2,6 +2,9 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
+use CreateCurrencylayerCurrenciesTable;
+use CreateCurrencylayerRatesTable;
+use Illuminate\Foundation\Application;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Orkhanahmadov\LaravelCurrencylayer\CurrencylayerFacade;
 use Orkhanahmadov\LaravelCurrencylayer\LaravelCurrencylayerServiceProvider;
@@ -14,11 +17,25 @@ abstract class TestCase extends Orchestra
 
         $this->setUpDatabase($this->app);
 
-        $this->withFactories(__DIR__.'/../database/factories');
+        $this->withFactories(__DIR__ . '/../database/factories');
     }
 
     /**
-     * @param \Illuminate\Foundation\Application $app
+     * Set up the database.
+     *
+     * @param Application $app
+     */
+    protected function setUpDatabase($app)
+    {
+        include_once __DIR__ . '/../database/migrations/create_currencylayer_currencies_table.php.stub';
+        (new CreateCurrencylayerCurrenciesTable())->up();
+
+        include_once __DIR__ . '/../database/migrations/create_currencylayer_currency_rates_table.php.stub';
+        (new CreateCurrencylayerRatesTable())->up();
+    }
+
+    /**
+     * @param Application $app
      *
      * @return array
      */
@@ -30,7 +47,7 @@ abstract class TestCase extends Orchestra
     }
 
     /**
-     * @param  \Illuminate\Foundation\Application  $app
+     * @param Application $app
      *
      * @return array
      */
@@ -44,24 +61,10 @@ abstract class TestCase extends Orchestra
     /**
      * Set up the environment.
      *
-     * @param \Illuminate\Foundation\Application $app
+     * @param Application $app
      */
     protected function getEnvironmentSetUp($app)
     {
         $app['config']->set('database.default', 'testing');
-    }
-
-    /**
-     * Set up the database.
-     *
-     * @param \Illuminate\Foundation\Application $app
-     */
-    protected function setUpDatabase($app)
-    {
-        include_once __DIR__.'/../database/migrations/create_currencylayer_currencies_table.php.stub';
-        (new \CreateCurrencylayerCurrenciesTable())->up();
-
-        include_once __DIR__.'/../database/migrations/create_currencylayer_currency_rates_table.php.stub';
-        (new \CreateCurrencylayerRatesTable())->up();
     }
 }

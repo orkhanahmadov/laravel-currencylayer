@@ -3,7 +3,6 @@
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests\Commands;
 
 use OceanApplications\currencylayer\client;
-use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Tests\FakeClient;
@@ -11,15 +10,6 @@ use Orkhanahmadov\LaravelCurrencylayer\Tests\TestCase;
 
 class LiveCommandTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app->bind(client::class, function () {
-            return new FakeClient();
-        });
-    }
-
     public function testWithMultipleCurrencies()
     {
         $this->artisan('currencylayer:live USD AED AMD')
@@ -33,5 +23,14 @@ class LiveCommandTest extends TestCase
     {
         $this->artisan('currencylayer:live USD AED')
             ->assertExitCode(0);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app->bind(client::class, function () {
+            return new FakeClient();
+        });
     }
 }

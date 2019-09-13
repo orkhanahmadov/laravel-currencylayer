@@ -23,15 +23,15 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__.'/../config/config.php' => config_path('currencylayer.php'),
+                __DIR__ . '/../config/config.php' => config_path('currencylayer.php'),
             ], 'config');
 
-            if (! class_exists('CreateCurrencylayerCurrenciesTable') &&
-                ! class_exists('CreateCurrencylayerCurrencyRatesTable')
+            if (!class_exists('CreateCurrencylayerCurrenciesTable') &&
+                !class_exists('CreateCurrencylayerRatesTable')
             ) {
                 $this->publishes([
-                    __DIR__.'/../database/migrations/create_currencylayer_currencies_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_currencylayer_currencies_table.php'),
-                    __DIR__.'/../database/migrations/create_currencylayer_currency_rates_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_currencylayer_currency_rates_table.php'),
+                    __DIR__ . '/../database/migrations/create_currencylayer_currencies_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_currencylayer_currencies_table.php'),
+                    __DIR__ . '/../database/migrations/create_currencylayer_currency_rates_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_currencylayer_currency_rates_table.php'),
                 ], 'migrations');
             }
         }
@@ -42,7 +42,7 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'currencylayer');
+        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'currencylayer');
 
         $this->app->singleton('currencylayer', function () {
             return new Currencylayer(new client(config('currencylayer.access_key')));

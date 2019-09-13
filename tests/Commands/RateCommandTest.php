@@ -3,7 +3,6 @@
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests\Commands;
 
 use OceanApplications\currencylayer\client;
-use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Tests\FakeClient;
@@ -11,15 +10,6 @@ use Orkhanahmadov\LaravelCurrencylayer\Tests\TestCase;
 
 class RateCommandTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app->bind(client::class, function () {
-            return new FakeClient();
-        });
-    }
-
     public function test()
     {
         $this->artisan('currencylayer:rate USD 2005-02-01 AED AMD')
@@ -33,5 +23,14 @@ class RateCommandTest extends TestCase
     {
         $this->artisan('currencylayer:rate USD 2005-02-01 AED')
             ->assertExitCode(0);
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app->bind(client::class, function () {
+            return new FakeClient();
+        });
     }
 }

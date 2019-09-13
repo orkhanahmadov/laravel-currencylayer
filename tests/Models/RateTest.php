@@ -2,9 +2,9 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests\Models;
 
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Tests\TestCase;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 
 class RateTest extends TestCase
 {

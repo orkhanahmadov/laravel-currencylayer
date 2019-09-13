@@ -4,9 +4,9 @@ namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
 use Carbon\Carbon;
 use OceanApplications\currencylayer\client;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 
 class CurrencylayerTest extends TestCase
 {
@@ -14,17 +14,6 @@ class CurrencylayerTest extends TestCase
      * @var Currencylayer
      */
     private $service;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->app->bind(client::class, function () {
-            return new FakeClient();
-        });
-
-        $this->service = app(Currencylayer::class);
-    }
 
     public function testLiveWithSingleTarget()
     {
@@ -102,5 +91,16 @@ class CurrencylayerTest extends TestCase
         $this->assertSame(475.798293, $rates['AMD']);
         $this->assertSame(3, Currency::count());
         $this->assertSame(2, Rate::count());
+    }
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->app->bind(client::class, function () {
+            return new FakeClient();
+        });
+
+        $this->service = app(Currencylayer::class);
     }
 }

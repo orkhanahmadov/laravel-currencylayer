@@ -33,7 +33,7 @@ class Currencylayer
     public function live($source, ...$currencies)
     {
         $currencies = Arr::flatten($currencies);
-        if (! $source instanceof Currency) {
+        if (!$source instanceof Currency) {
             $source = Currency::firstOrCreate(['code' => $source]);
         }
 
@@ -54,10 +54,10 @@ class Currencylayer
     public function rate($source, $date, ...$currencies)
     {
         $currencies = Arr::flatten($currencies);
-        if (! $source instanceof Currency) {
+        if (!$source instanceof Currency) {
             $source = Currency::firstOrCreate(['code' => $source]);
         }
-        if (! $date instanceof Carbon) {
+        if (!$date instanceof Carbon) {
             $date = Carbon::parse($date);
         }
 
@@ -66,6 +66,20 @@ class Currencylayer
         $rates = $this->createRates($source, $apiResponse['quotes'], $apiResponse['timestamp']);
 
         return count($currencies) === 1 ? array_values($rates)[0] : $rates;
+    }
+
+    /**
+     * @param Currency $source
+     * @param array $currencies
+     * @param Carbon|null $date
+     *
+     * @return array
+     */
+    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): array
+    {
+        $client = $this->client->source($source->code)->currencies(implode(',', $currencies));
+
+        return $date ? $client->date($date->format('Y-m-d'))->historical() : $client->live();
     }
 
     /**
@@ -87,7 +101,7 @@ class Currencylayer
                 'timestamp' => Carbon::parse($timestamp),
             ])->first();
 
-            if (! $currencyRate) {
+            if (!$currencyRate) {
                 $currencyRate = $source->rates()->create([
                     'target_currency_id' => $targetCurrency->id,
                     'rate' => $rate,
@@ -99,19 +113,5 @@ class Currencylayer
         }
 
         return $rates;
-    }
-
-    /**
-     * @param Currency $source
-     * @param array $currencies
-     * @param Carbon|null $date
-     *
-     * @return array
-     */
-    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): array
-    {
-        $client = $this->client->source($source->code)->currencies(implode(',', $currencies));
-
-        return $date ? $client->date($date->format('Y-m-d'))->historical() : $client->live();
     }
 }
