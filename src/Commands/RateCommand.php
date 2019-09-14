@@ -51,7 +51,7 @@ class RateCommand extends Command
         );
 
         $this->output(
-            $date . ' ' . $source . ' rates',
+            $date.' '.$source.' rates',
             $this->prepareRows($currencies, $rates)
         );
     }
