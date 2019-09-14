@@ -2,7 +2,6 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Commands;
 
-use Illuminate\Console\Command;
 use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 
 class LiveCommand extends Command
@@ -40,18 +39,17 @@ class LiveCommand extends Command
      */
     public function handle(Currencylayer $currencylayer)
     {
+        /* @var array|float */
         $rates = $currencylayer->live(
             /* @var string */
-            $this->argument('source'),
+            $source = $this->argument('source'),
             /* @var array */
-            $this->argument('currencies')
+            $currencies = $this->argument('currencies')
         );
 
-        $header = ['Currency', 'Rate'];
-        if (is_array($rates)) {
-            $this->table($header, [array_keys($rates), array_values($rates)]);
-        } else {
-            $this->table($header, [$this->argument('currencies'), [$rates]]);
-        }
+        $this->output(
+            'Live ' . $source . ' rates',
+            $this->prepareRows($currencies, $rates)
+        );
     }
 }
