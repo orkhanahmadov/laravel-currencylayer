@@ -30,7 +30,7 @@ abstract class TestCase extends Orchestra
         include_once __DIR__.'/../database/migrations/create_currencylayer_currencies_table.php.stub';
         (new CreateCurrencylayerCurrenciesTable())->up();
 
-        include_once __DIR__.'/../database/migrations/create_currencylayer_currency_rates_table.php.stub';
+        include_once __DIR__.'/../database/migrations/create_currencylayer_rates_table.php.stub';
         (new CreateCurrencylayerRatesTable())->up();
     }
 

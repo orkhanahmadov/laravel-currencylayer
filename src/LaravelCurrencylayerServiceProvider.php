@@ -31,7 +31,7 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
             ) {
                 $this->publishes([
                     __DIR__.'/../database/migrations/create_currencylayer_currencies_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_currencylayer_currencies_table.php'),
-                    __DIR__.'/../database/migrations/create_currencylayer_currency_rates_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_currencylayer_currency_rates_table.php'),
+                    __DIR__.'/../database/migrations/create_currencylayer_rates_table.php.stub' => database_path('migrations/'.date('Y_m_d_His', time()).'_create_currencylayer_rates_table.php'),
                 ], 'migrations');
             }
         }

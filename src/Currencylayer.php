@@ -70,20 +70,6 @@ class Currencylayer
 
     /**
      * @param Currency $source
-     * @param array $currencies
-     * @param Carbon|null $date
-     *
-     * @return array
-     */
-    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): array
-    {
-        $client = $this->client->source($source->code)->currencies(implode(',', $currencies));
-
-        return $date ? $client->date($date->format('Y-m-d'))->historical() : $client->live();
-    }
-
-    /**
-     * @param Currency $source
      * @param array $quotes
      * @param int $timestamp
      *
@@ -98,7 +84,7 @@ class Currencylayer
 
             $currencyRate = $source->rates()->where([
                 'target_currency_id' => $targetCurrency->id,
-                'timestamp' => Carbon::parse($timestamp),
+                'timestamp' => $timestamp,
             ])->first();
 
             if (! $currencyRate) {
@@ -113,5 +99,19 @@ class Currencylayer
         }
 
         return $rates;
+    }
+
+    /**
+     * @param Currency $source
+     * @param array $currencies
+     * @param Carbon|null $date
+     *
+     * @return array
+     */
+    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): array
+    {
+        $client = $this->client->source($source->code)->currencies(implode(',', $currencies));
+
+        return $date ? $client->date($date->format('Y-m-d'))->historical() : $client->live();
     }
 }
