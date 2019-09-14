@@ -48,7 +48,7 @@ class LiveCommand extends Command
         );
 
         $this->output(
-            'Live ' . $source . ' rates',
+            'Live '.$source.' rates',
             $this->prepareRows($currencies, $rates)
         );
     }
