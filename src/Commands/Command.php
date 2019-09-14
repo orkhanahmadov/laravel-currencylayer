@@ -18,6 +18,7 @@ abstract class Command extends BaseCommand
         $table = new Table($this->output);
 
         $table->setStyle('box-double')
+            ->setColumnWidths([10, 10])
             ->setHeaderTitle($title)
             ->setHeaders(['Currency', 'Rate'])
             ->addRows($rows);
