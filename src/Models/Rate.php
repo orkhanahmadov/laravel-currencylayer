@@ -24,6 +24,10 @@ class Rate extends Model
         'timestamp',
     ];
 
+    protected $dates = [
+        'timestamp',
+    ];
+
     protected $casts = [
         'rate' => 'float',
     ];

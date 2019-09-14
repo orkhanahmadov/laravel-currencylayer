@@ -84,7 +84,7 @@ class Currencylayer
 
             $currencyRate = $source->rates()->where([
                 'target_currency_id' => $targetCurrency->id,
-                'timestamp' => $timestamp,
+                'timestamp' => Carbon::parse($timestamp),
             ])->first();
 
             if (! $currencyRate) {
