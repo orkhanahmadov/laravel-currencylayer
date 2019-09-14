@@ -43,6 +43,6 @@ class IntegrationTest extends TestCase
     {
         parent::setUp();
 
-        $this->service = app(Currencylayer::class);
+        $this->service = app('currencylayer');
     }
 }

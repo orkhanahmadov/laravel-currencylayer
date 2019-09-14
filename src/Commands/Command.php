@@ -5,7 +5,7 @@ namespace Orkhanahmadov\LaravelCurrencylayer\Commands;
 use Illuminate\Console\Command as BaseCommand;
 use Symfony\Component\Console\Helper\Table;
 
-abstract class Command extends BaseCommand
+class Command extends BaseCommand
 {
     /**
      * Renders console output.
