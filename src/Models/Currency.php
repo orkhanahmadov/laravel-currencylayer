@@ -26,6 +26,8 @@ class Currency extends Model
     }
 
     /**
+     * Get rate against for given currency and date.
+     *
      * @param Currency|string $currency
      * @param Carbon|string|null $date
      *
