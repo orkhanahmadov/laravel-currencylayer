@@ -35,8 +35,8 @@ class Currency extends Model
      */
     public function rateFor($currency, $date = null): ?Rate
     {
-        if (! $currency instanceof Currency) {
-            $currency = Currency::where('code', $currency)->firstOrFail();
+        if (! $currency instanceof self) {
+            $currency = self::where('code', $currency)->firstOrFail();
         }
 
         $query = $this->rates()->where('target_currency_id', $currency->id);

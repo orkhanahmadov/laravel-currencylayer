@@ -2,7 +2,6 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests\Models;
 
-use Carbon\Carbon;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Tests\TestCase;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
