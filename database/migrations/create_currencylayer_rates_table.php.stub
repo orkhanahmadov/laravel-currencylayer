@@ -17,8 +17,7 @@ class CreateCurrencylayerRatesTable extends Migration
             $table->foreign('source_currency_id')->references('id')->on('currencylayer_currencies')->onDelete('cascade');
             $table->unsignedBigInteger('target_currency_id')->index();
             $table->foreign('target_currency_id')->references('id')->on('currencylayer_currencies')->onDelete('cascade');
-            // todo: define this
-            $table->decimal('rate', 20, 12);
+            $table->decimal('rate', 20, 14);
             $table->timestamp('timestamp');
         });
     }
