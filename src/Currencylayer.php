@@ -70,19 +70,19 @@ class Currencylayer
 
     /**
      * @param Currency $source
-     * @param array<float> $quotes
+     * @param array<float> $apiRates
      * @param int $timestamp
      *
      * @return array<float>
      */
-    private function createRates(Currency $source, array $quotes, int $timestamp): array
+    private function createRates(Currency $source, array $apiRates, int $timestamp): array
     {
         $rates = [];
 
-        foreach ($quotes as $code => $rate) {
+        foreach ($apiRates as $code => $rate) {
             $target = Currency::firstOrCreate(['code' => $targetCurrencyCode = substr($code, -3)]);
 
-            $currencyRate = $this->assignCurrencyRate($source, $target, $rate, $timestamp);
+            $currencyRate = $this->assignRate($source, $target, $rate, $timestamp);
 
             $rates[$targetCurrencyCode] = $currencyRate->rate;
         }
@@ -96,9 +96,9 @@ class Currencylayer
      * @param float $rate
      * @param int $timestamp
      *
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Model
      */
-    private function assignCurrencyRate(Currency $source, Currency $target, float $rate, int $timestamp)
+    private function assignRate(Currency $source, Currency $target, float $rate, int $timestamp)
     {
         $currencyRate = $source->rates()->where([
             'target_currency_id' => $target->id,

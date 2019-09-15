@@ -65,6 +65,69 @@ You can also use provided facade:
 \Currencylayer::live('USD', 'EUR');
 ```
 
+### Models
+
+// model description here
+
+### Methods
+
+All methods save rates to database table when fetched.
+
+#### `live()`
+
+Method fetches live rates from currencylayer.com
+
+```php
+$currencyService->live('USD', 'EUR');
+```
+
+First argument is source currency, second argument is converted currency.
+You can also pass instance of `Orkhanahmadov\LaravelCurrencylayer\Models\Currency` as a source currency.
+
+```php
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+
+$usd = Currency::where('code', 'USD')->first();
+$currencyService->live($usd, 'EUR');
+```
+
+To get live rates for multiple currencies, pass multiple currency codes:
+
+```php
+$currencyService->live('USD', 'EUR', 'CHF', 'BTC', 'RUB');
+// or
+$currencyService->live('USD', ['EUR', 'CHF', 'BTC', 'RUB']);
+```
+
+#### `rate()`
+
+Method fetches rates for given date from currencylayer.com
+
+```php
+$currencyService->rate('USD', '2019-01-25', 'EUR');
+```
+
+First argument is source currency, second argument is date, third argument is converted currency.
+You can also pass instance of `Orkhanahmadov\LaravelCurrencylayer\Models\Currency` as a source currency argument 
+and instance of `Carbon\Carbon` as a date argument.
+
+```php
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+use Carbon\Carbon;
+
+$usd = Currency::where('code', 'USD')->first();
+$today = Carbon::today();
+$currencyService->rate($usd, $today, 'EUR');
+```
+
+To get rates for multiple currencies, pass multiple currency codes:
+
+```php
+$currencyService->rate('USD', '2019-01-25', 'EUR', 'CHF', 'BTC', 'RUB');
+// or
+$currencyService->rate('USD', '2019-01-25', ['EUR', 'CHF', 'BTC', 'RUB']);
+```
+
 ### Testing
 
 ``` bash
