@@ -2,7 +2,6 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
-use CurrencylayerFacade;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
@@ -15,7 +14,7 @@ class FacadeTest extends TestCase
             return new Currencylayer(new FakeClient());
         });
 
-        $rate = CurrencylayerFacade::live('USD', 'AED');
+        $rate = \Currencylayer::live('USD', 'AED');
 
         $this->assertSame(3.673103, $rate);
     }
@@ -25,7 +24,7 @@ class FacadeTest extends TestCase
      */
     public function testFacadeWithRealClient()
     {
-        CurrencylayerFacade::live('USD', 'AED');
+        \Currencylayer::live('USD', 'AED');
 
         $this->assertSame(2, Currency::count());
         $this->assertSame(1, Rate::count());

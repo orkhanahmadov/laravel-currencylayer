@@ -1,13 +1,13 @@
 <?php
 
-namespace Orkhanahmadov\LaravelCurrencylayer;
+namespace Orkhanahmadov\LaravelCurrencylayer\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
  * @see \Orkhanahmadov\LaravelCurrencylayer\Currencylayer
  */
-class CurrencylayerFacade extends Facade
+class Currencylayer extends Facade
 {
     /**
      * Get the registered name of the component.

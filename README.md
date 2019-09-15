@@ -1,6 +1,6 @@
 # WIP
 
-# Laravel package for [currencylayer.com](https://currencylayer.com)
+# :currency_exchange: Laravel package for [currencylayer.com](https://currencylayer.com)
 
 [![Latest Stable Version](https://poser.pugx.org/orkhanahmadov/laravel-currencylayer/v/stable)](https://packagist.org/packages/orkhanahmadov/laravel-currencylayer)
 [![Latest Unstable Version](https://poser.pugx.org/orkhanahmadov/laravel-currencylayer/v/unstable)](https://packagist.org/packages/orkhanahmadov/laravel-currencylayer)
@@ -13,7 +13,7 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/orkhanahmadov/laravel-currencylayer.svg)](https://scrutinizer-ci.com/g/orkhanahmadov/laravel-currencylayer)
 [![StyleCI](https://github.styleci.io/repos/208126340/shield?branch=master)](https://github.styleci.io/repos/208126340)
 
-Description here
+Simple Laravel package for integrating with currencylayer.com currency rates.
 
 ## Installation
 
@@ -23,10 +23,46 @@ You can install the package via composer:
 composer require orkhanahmadov/laravel-currencylayer
 ```
 
+Publish package migration and config files:
+
+```bash
+php artisan vendor:publish --provider="Orkhanahmadov\LaravelCurrencylayer\LaravelCurrencylayerServiceProvider"
+```
+
+Set your currencylayer.com access key in `.env` file:
+
+```bash
+CURRENCYLAYER_ACCESS_KEY=your_key_here
+```
+
+You can find your access key in [Currencylayer dashboard](https://currencylayer.com/dashboard).
+
 ## Usage
 
-``` php
-// Usage description here
+You can type-hint `Orkhanahmadov\LaravelCurrencylayer\Currencylayer` to inject it from container:
+
+```php
+use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
+
+class CurrencyController
+{
+    public function __construct(Currencylayer $currencyService)
+    {
+        $currencyService->live('USD', 'EUR');
+    }
+}
+```
+
+Anywhere outside container you can create instance of the service with `app()` method:
+
+```php
+$currencyService = app('currencylayer');
+$currencyService->live('USD', 'EUR');
+```
+
+You can also use provided facade:
+```php
+\Currencylayer::live('USD', 'EUR');
 ```
 
 ### Testing

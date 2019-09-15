@@ -2,11 +2,9 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
-use CreateCurrencylayerRatesTable;
 use Illuminate\Foundation\Application;
-use CreateCurrencylayerCurrenciesTable;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Orkhanahmadov\LaravelCurrencylayer\CurrencylayerFacade;
+use Orkhanahmadov\LaravelCurrencylayer\Facades\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\LaravelCurrencylayerServiceProvider;
 
 abstract class TestCase extends Orchestra
@@ -28,10 +26,10 @@ abstract class TestCase extends Orchestra
     protected function setUpDatabase($app)
     {
         include_once __DIR__.'/../database/migrations/create_currencylayer_currencies_table.php.stub';
-        (new CreateCurrencylayerCurrenciesTable())->up();
+        (new \CreateCurrencylayerCurrenciesTable())->up();
 
         include_once __DIR__.'/../database/migrations/create_currencylayer_rates_table.php.stub';
-        (new CreateCurrencylayerRatesTable())->up();
+        (new \CreateCurrencylayerRatesTable())->up();
     }
 
     /**
@@ -54,7 +52,7 @@ abstract class TestCase extends Orchestra
     protected function getPackageAliases($app)
     {
         return [
-            'CurrencylayerFacade' => CurrencylayerFacade::class,
+            'Currencylayer' => Currencylayer::class,
         ];
     }
 
