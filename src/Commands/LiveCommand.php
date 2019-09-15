@@ -30,15 +30,15 @@ class LiveCommand extends Command
     public function handle(Currencylayer $currencylayer): void
     {
         /**
-         * @var array|float $rates
+         * @var array|float
          */
         $rates = $currencylayer->live(
             /**
-             * @var string $source
+             * @var string
              */
             $source = $this->argument('source'),
             /**
-             * @var array $currencies
+             * @var array
              */
             $currencies = $this->argument('currencies')
         );
