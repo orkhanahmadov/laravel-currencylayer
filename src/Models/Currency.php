@@ -12,10 +12,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Currency extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = 'currencylayer_currencies';
-
+    /**
+     * @var bool
+     */
     public $timestamps = false;
-
+    /**
+     * @var array<string>
+     */
     protected $fillable = [
         'code',
     ];
@@ -26,7 +33,7 @@ class Currency extends Model
     }
 
     /**
-     * Get rate against for given currency and date.
+     * Get rate for given currency and date.
      *
      * @param Currency|string $currency
      * @param Carbon|string|null $date

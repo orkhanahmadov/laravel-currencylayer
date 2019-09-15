@@ -5,13 +5,13 @@ namespace Orkhanahmadov\LaravelCurrencylayer\Commands;
 use Symfony\Component\Console\Helper\Table;
 use Illuminate\Console\Command as BaseCommand;
 
-class Command extends BaseCommand
+abstract class Command extends BaseCommand
 {
     /**
      * Renders console output.
      *
      * @param string $title
-     * @param array $rows
+     * @param array<mixed> $rows
      */
     protected function output(string $title, array $rows): void
     {
@@ -29,10 +29,10 @@ class Command extends BaseCommand
     /**
      * Prepare table rows.
      *
-     * @param array $currencies
-     * @param array|float $rates
+     * @param array<string> $currencies
+     * @param array<float>|float $rates
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function prepareRows(array $currencies, $rates): array
     {

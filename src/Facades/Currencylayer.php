@@ -14,7 +14,7 @@ class Currencylayer extends Facade
      *
      * @return string
      */
-    protected static function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'currencylayer';
     }

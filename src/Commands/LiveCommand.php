@@ -23,27 +23,23 @@ class LiveCommand extends Command
     protected $description = 'Gets live rates for currencies';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @param Currencylayer $currencylayer
      */
-    public function handle(Currencylayer $currencylayer)
+    public function handle(Currencylayer $currencylayer): void
     {
-        /* @var array|float $rates */
+        /**
+         * @var array|float $rates
+         */
         $rates = $currencylayer->live(
-            /* @var string $source */
+            /**
+             * @var string $source
+             */
             $source = $this->argument('source'),
-            /* @var array $currencies */
+            /**
+             * @var array $currencies
+             */
             $currencies = $this->argument('currencies')
         );
 

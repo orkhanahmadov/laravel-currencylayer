@@ -14,20 +14,31 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Rate extends Model
 {
+    /**
+     * @var string
+     */
     protected $table = 'currencylayer_rates';
-
+    /**
+     * @var bool
+     */
     public $timestamps = false;
-
+    /**
+     * @var array<string>
+     */
     protected $fillable = [
         'target_currency_id',
         'rate',
         'timestamp',
     ];
-
+    /**
+     * @var array<string>
+     */
     protected $dates = [
         'timestamp',
     ];
-
+    /**
+     * @var array<string>
+     */
     protected $casts = [
         'rate' => 'float',
     ];

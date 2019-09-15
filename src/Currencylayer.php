@@ -26,9 +26,9 @@ class Currencylayer
 
     /**
      * @param Currency|string $source
-     * @param mixed ...$currencies
+     * @param array<string>|string ...$currencies
      *
-     * @return array|float
+     * @return array<float>|float
      */
     public function live($source, ...$currencies)
     {
@@ -47,9 +47,9 @@ class Currencylayer
     /**
      * @param Currency|string $source
      * @param Carbon|string $date
-     * @param mixed ...$currencies
+     * @param array<string>|string ...$currencies
      *
-     * @return array|float
+     * @return array<float>|float
      */
     public function rate($source, $date, ...$currencies)
     {
@@ -70,30 +70,19 @@ class Currencylayer
 
     /**
      * @param Currency $source
-     * @param array $quotes
+     * @param array<float> $quotes
      * @param int $timestamp
      *
-     * @return array
+     * @return array<float>
      */
     private function createRates(Currency $source, array $quotes, int $timestamp): array
     {
         $rates = [];
 
         foreach ($quotes as $code => $rate) {
-            $targetCurrency = Currency::firstOrCreate(['code' => $targetCurrencyCode = substr($code, -3)]);
+            $target = Currency::firstOrCreate(['code' => $targetCurrencyCode = substr($code, -3)]);
 
-            $currencyRate = $source->rates()->where([
-                'target_currency_id' => $targetCurrency->id,
-                'timestamp' => Carbon::parse($timestamp),
-            ])->first();
-
-            if (! $currencyRate) {
-                $currencyRate = $source->rates()->create([
-                    'target_currency_id' => $targetCurrency->id,
-                    'rate' => $rate,
-                    'timestamp' => $timestamp,
-                ]);
-            }
+            $currencyRate = $this->assignCurrencyRate($source, $target, $rate, $timestamp);
 
             $rates[$targetCurrencyCode] = $currencyRate->rate;
         }
@@ -103,10 +92,36 @@ class Currencylayer
 
     /**
      * @param Currency $source
-     * @param array $currencies
+     * @param Currency $target
+     * @param float $rate
+     * @param int $timestamp
+     *
+     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    private function assignCurrencyRate(Currency $source, Currency $target, float $rate, int $timestamp)
+    {
+        $currencyRate = $source->rates()->where([
+            'target_currency_id' => $target->id,
+            'timestamp' => Carbon::parse($timestamp),
+        ])->first();
+
+        if (! $currencyRate) {
+            $currencyRate = $source->rates()->create([
+                'target_currency_id' => $target->id,
+                'rate' => $rate,
+                'timestamp' => $timestamp,
+            ]);
+        }
+
+        return $currencyRate;
+    }
+
+    /**
+     * @param Currency $source
+     * @param array<string> $currencies
      * @param Carbon|null $date
      *
-     * @return array
+     * @return array<mixed>
      */
     private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): array
     {

@@ -15,9 +15,9 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
-        $this->app->bind(client::class, function () {
+        $this->app->bind(client::class, static function () {
             return new client(config('currencylayer.access_key'));
         });
 
@@ -40,11 +40,11 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'currencylayer');
 
-        $this->app->singleton('currencylayer', function () {
+        $this->app->singleton('currencylayer', static function () {
             return new Currencylayer(new client(config('currencylayer.access_key')));
         });
 
