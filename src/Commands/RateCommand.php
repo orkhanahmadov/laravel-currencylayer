@@ -42,11 +42,11 @@ class RateCommand extends Command
     {
         /* @var array|float */
         $rates = $currencylayer->rate(
-            /* @var string */
+            /* @var string $source */
             $source = $this->argument('source'),
-            /* @var string */
+            /* @var string $date */
             $date = $this->argument('date'),
-            /* @var array */
+            /* @var array $currencies */
             $currencies = $this->argument('currencies')
         );
 

@@ -41,9 +41,9 @@ class LiveCommand extends Command
     {
         /* @var array|float */
         $rates = $currencylayer->live(
-            /* @var string */
+            /* @var string $source */
             $source = $this->argument('source'),
-            /* @var array */
+            /* @var array $currencies */
             $currencies = $this->argument('currencies')
         );
 
