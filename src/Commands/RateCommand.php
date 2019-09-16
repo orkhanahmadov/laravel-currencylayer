@@ -2,7 +2,7 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Commands;
 
-use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
+use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 
 class RateCommand extends Command
 {
@@ -26,14 +26,14 @@ class RateCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param Currencylayer $currencylayer
+     * @param CurrencyService $currencyService
      */
-    public function handle(Currencylayer $currencylayer): void
+    public function handle(CurrencyService $currencyService): void
     {
         /**
          * @var array|float
          */
-        $rates = $currencylayer->rate(
+        $rates = $currencyService->rate(
             /**
              * @var string
              */

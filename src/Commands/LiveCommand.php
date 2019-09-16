@@ -2,7 +2,7 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Commands;
 
-use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
+use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 
 class LiveCommand extends Command
 {
@@ -25,14 +25,14 @@ class LiveCommand extends Command
     /**
      * Execute the console command.
      *
-     * @param Currencylayer $currencylayer
+     * @param CurrencyService $currencyService
      */
-    public function handle(Currencylayer $currencylayer): void
+    public function handle(CurrencyService $currencyService): void
     {
         /**
          * @var array|float
          */
-        $rates = $currencylayer->live(
+        $rates = $currencyService->live(
             /**
              * @var string
              */
