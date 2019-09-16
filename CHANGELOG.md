@@ -2,6 +2,6 @@
 
 All notable changes to `laravel-currencylayer` will be documented in this file
 
-## 1.0.0 - 2019-09-14
+## 1.0.0 - 2019-09-16
 
 - Initial release
