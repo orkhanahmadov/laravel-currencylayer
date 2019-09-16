@@ -30,21 +30,21 @@ php artisan vendor:publish --provider="Orkhanahmadov\LaravelCurrencylayer\Larave
 Set your currencylayer.com access key in `.env` file:
 
 ```bash
-CURRENCYLAYER_ACCESS_KEY=your_key_here
+CURRENCYLAYER_ACCESS_KEY=your-key-here
 ```
 
 You can find your access key in [Currencylayer Dashboard](https://currencylayer.com/dashboard).
 
 ## Usage
 
-You can type-hint `Orkhanahmadov\LaravelCurrencylayer\Currencylayer` to inject it from container:
+You can type-hint `Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService` to inject it from container:
 
 ```php
-use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
+use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 
 class CurrencyController
 {
-    public function __construct(Currencylayer $currencyService)
+    public function __construct(CurrencyService $currencyService)
     {
         $currencyService->live('USD', 'EUR');
     }
