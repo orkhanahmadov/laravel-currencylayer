@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use OceanApplications\currencylayer\client;
 use Orkhanahmadov\LaravelCurrencylayer\Commands\LiveCommand;
 use Orkhanahmadov\LaravelCurrencylayer\Commands\RateCommand;
+use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 
 /**
  * @codeCoverageIgnore
@@ -20,6 +21,7 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
         $this->app->bind(client::class, static function () {
             return new client(config('currencylayer.access_key'));
         });
+        $this->app->bind(CurrencyService::class, Currencylayer::class);
 
         if ($this->app->runningInConsole()) {
             $this->publishes([

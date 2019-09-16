@@ -5,9 +5,10 @@ namespace Orkhanahmadov\LaravelCurrencylayer;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use OceanApplications\currencylayer\client;
+use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 
-class Currencylayer
+class Currencylayer implements CurrencyService
 {
     /**
      * @var client
