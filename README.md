@@ -1,5 +1,3 @@
-# WIP
-
 # :currency_exchange: Laravel package for [currencylayer.com](https://currencylayer.com)
 
 [![Latest Stable Version](https://poser.pugx.org/orkhanahmadov/laravel-currencylayer/v/stable)](https://packagist.org/packages/orkhanahmadov/laravel-currencylayer)
@@ -35,7 +33,7 @@ Set your currencylayer.com access key in `.env` file:
 CURRENCYLAYER_ACCESS_KEY=your_key_here
 ```
 
-You can find your access key in [Currencylayer dashboard](https://currencylayer.com/dashboard).
+You can find your access key in [Currencylayer Dashboard](https://currencylayer.com/dashboard).
 
 ## Usage
 
@@ -65,11 +63,7 @@ You can also use provided facade:
 \Currencylayer::live('USD', 'EUR');
 ```
 
-### Models
-
-// model description here
-
-### Methods
+### Available methods
 
 All methods save rates to database table when fetched.
 
@@ -112,8 +106,8 @@ You can also pass instance of `Orkhanahmadov\LaravelCurrencylayer\Models\Currenc
 and instance of `Carbon\Carbon` as a date argument.
 
 ```php
-use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Carbon\Carbon;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 
 $usd = Currency::where('code', 'USD')->first();
 $today = Carbon::today();
@@ -126,6 +120,41 @@ To get rates for multiple currencies, pass multiple currency codes:
 $currencyService->rate('USD', '2019-01-25', 'EUR', 'CHF', 'BTC', 'RUB');
 // or
 $currencyService->rate('USD', '2019-01-25', ['EUR', 'CHF', 'BTC', 'RUB']);
+```
+
+### Models
+
+Package comes with 2 database models:
+
+* `Orkhanahmadov\LaravelCurrencylayer\Models\Currency` - stores each fetched currency codes
+* `Orkhanahmadov\LaravelCurrencylayer\Models\Rate` - stores rate for each currency exchange based on timestamp
+
+`Currency` model has `rateFor()` method you can use to get currency rate.
+First argument is target currency code or can be instance of `Currency`.
+
+```php
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+
+$usd = Currency::where('code', 'USD')->first();
+$rate = $usd->rateFor('EUR');
+// or
+$eur = Currency::where('code', 'EUR')->first();
+$rate = $usd->rateFor($eur);
+```
+
+This will fetch latest USD to EUR rate.
+
+You can also pass date or `Carbon\Carbon` instance as a second argument to get rates for that date:
+
+```php
+use Carbon\Carbon;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+
+$usd = Currency::where('code', 'USD')->first();
+$rate = $usd->rateFor('EUR', '2019-01-25');
+// or
+$today = Carbon::today();
+$rate = $usd->rateFor('EUR', $today);
 ```
 
 ### Testing
