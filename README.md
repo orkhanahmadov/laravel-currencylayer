@@ -122,6 +122,28 @@ $currencyService->rate('USD', '2019-01-25', 'EUR', 'CHF', 'BTC', 'RUB');
 $currencyService->rate('USD', '2019-01-25', ['EUR', 'CHF', 'BTC', 'RUB']);
 ```
 
+### Commands
+
+Package comes with 2 commands:
+
+`php artisan currencylayer:live` - fetches live rates and outputs the values. First argument is source currency, 
+second and next arguments are target currencies:
+
+```bash
+php artisan currencylayer:live USD EUR CHF
+```
+
+This will fetch live rates for USD to EUR and USD to CHF.
+
+`php artisan currencylayer:rate` - fetches rates for given date and outputs the values. First argument is source currency, 
+second argument is date, third and next arguments are target currencies:
+
+```bash
+php artisan currencylayer:rate USD 2019-01-25 EUR CHF
+```
+
+This will fetch rates for 2019-01-25 for USD to EUR and USD to CHF.
+
 ### Models
 
 Package comes with 2 database models:

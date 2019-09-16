@@ -10,7 +10,7 @@ use Orkhanahmadov\LaravelCurrencylayer\Tests\FakeClient;
 
 class RateCommandTest extends TestCase
 {
-    public function test()
+    public function testWithMultipleCurrencies()
     {
         $this->artisan('currencylayer:rate USD 2005-02-01 AED AMD')
             ->assertExitCode(0);
