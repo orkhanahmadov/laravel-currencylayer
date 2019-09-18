@@ -51,7 +51,7 @@ class CurrencyController
 }
 ```
 
-Anywhere outside container you can create instance of the service with `app()` method:
+Anywhere outside container you can create instance of the service with `app()` helper:
 
 ```php
 $currencyService = app('currencylayer');
