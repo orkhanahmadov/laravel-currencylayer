@@ -44,7 +44,7 @@ use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 
 class CurrencyController
 {
-    public function __construct(CurrencyService $currencyService)
+    public function index(CurrencyService $currencyService)
     {
         $currencyService->live('USD', 'EUR');
     }
