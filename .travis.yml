@@ -12,21 +12,15 @@ matrix:
     fast_finish: true
     include:
         - php: 7.1
-          env: LARAVEL_VERSION=5.5.* CARBON_VERSION=~1.0 TESTBENCH_VERSION=3.5.* PHPUNIT_VERSION=~6.0
-        - php: 7.1
-          env: LARAVEL_VERSION=5.8.* CARBON_VERSION=~2.0 TESTBENCH_VERSION=3.8.* PHPUNIT_VERSION=~7.0
+          env: LARAVEL_VERSION=5.8.* TESTBENCH_VERSION=3.8.* PHPUNIT_VERSION=~7.0
         - php: 7.2
-          env: LARAVEL_VERSION=5.5.* CARBON_VERSION=~1.0 TESTBENCH_VERSION=3.5.* PHPUNIT_VERSION=~6.0
+          env: LARAVEL_VERSION=5.8.* TESTBENCH_VERSION=3.8.* PHPUNIT_VERSION=~7.0
         - php: 7.2
-          env: LARAVEL_VERSION=5.8.* CARBON_VERSION=~2.0 TESTBENCH_VERSION=3.8.* PHPUNIT_VERSION=~7.0
-        - php: 7.2
-          env: LARAVEL_VERSION=~6.0  CARBON_VERSION=~2.0 TESTBENCH_VERSION=~4.0  PHPUNIT_VERSION=~8.0
+          env: LARAVEL_VERSION=~6.0  TESTBENCH_VERSION=~4.0  PHPUNIT_VERSION=~8.0
         - php: 7.3
-          env: LARAVEL_VERSION=5.5.* CARBON_VERSION=~1.0 TESTBENCH_VERSION=3.5.* PHPUNIT_VERSION=~6.0
+          env: LARAVEL_VERSION=5.8.* TESTBENCH_VERSION=3.8.* PHPUNIT_VERSION=~7.0
         - php: 7.3
-          env: LARAVEL_VERSION=5.8.* CARBON_VERSION=~2.0 TESTBENCH_VERSION=3.8.* PHPUNIT_VERSION=~7.0
-        - php: 7.3
-          env: LARAVEL_VERSION=~6.0  CARBON_VERSION=~2.0 TESTBENCH_VERSION=~4.0  PHPUNIT_VERSION=~8.0
+          env: LARAVEL_VERSION=~6.0  TESTBENCH_VERSION=~4.0  PHPUNIT_VERSION=~8.0
 
 before_install:
     - travis_retry composer self-update
@@ -40,7 +34,6 @@ install:
     - composer require "illuminate/contracts:${LARAVEL_VERSION}" --no-update --no-interaction --prefer-dist
     - composer require "illuminate/database:${LARAVEL_VERSION}" --no-update --no-interaction --prefer-dist
     - composer require "illuminate/support:${LARAVEL_VERSION}" --no-update --no-interaction --prefer-dist
-    - composer require "nesbot/carbon:${CARBON_VERSION}" --no-update --no-interaction --prefer-dist
     - composer require "orchestra/testbench:${TESTBENCH_VERSION}" --no-update --no-interaction --prefer-dist
     - composer require "phpunit/phpunit:${PHPUNIT_VERSION}" --no-update --no-interaction --prefer-dist
     - travis_retry composer install --no-interaction --prefer-dist --no-suggest
