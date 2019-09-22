@@ -12,7 +12,7 @@ class LiveCommandTest extends TestCase
 {
     public function testWithMultipleCurrencies()
     {
-        $this->artisan('currencylayer:live USD AED AMD')
+        $this->artisan('currencylayer:live', ['source' => 'USD', 'currencies' => ['AED','AMD']])
             ->assertExitCode(0);
 
         $this->assertSame(3, Currency::count());
@@ -21,7 +21,7 @@ class LiveCommandTest extends TestCase
 
     public function testWithSingleCurrency()
     {
-        $this->artisan('currencylayer:live USD AED')
+        $this->artisan('currencylayer:live', ['source' => 'USD', 'currencies' => ['AED']])
             ->assertExitCode(0);
     }
 

@@ -12,8 +12,10 @@ class RateCommandTest extends TestCase
 {
     public function testWithMultipleCurrencies()
     {
-        $this->artisan('currencylayer:rate USD 2005-02-01 AED AMD')
-            ->assertExitCode(0);
+        $this->artisan(
+            'currencylayer:rate',
+            ['source' => 'USD', 'date' => '2005-02-01', 'currencies' => ['AED', 'AMD']]
+        )->assertExitCode(0);
 
         $this->assertSame(3, Currency::count());
         $this->assertSame(2, Rate::count());
@@ -21,8 +23,10 @@ class RateCommandTest extends TestCase
 
     public function testWithSingleCurrency()
     {
-        $this->artisan('currencylayer:rate USD 2005-02-01 AED')
-            ->assertExitCode(0);
+        $this->artisan(
+            'currencylayer:rate',
+            ['source' => 'USD', 'date' => '2005-02-01', 'currencies' => ['AED']]
+        )->assertExitCode(0);
     }
 
     protected function setUp(): void
