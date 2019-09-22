@@ -44,14 +44,14 @@ use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 
 class CurrencyController
 {
-    public function __construct(CurrencyService $currencyService)
+    public function index(CurrencyService $currencyService)
     {
         $currencyService->live('USD', 'EUR');
     }
 }
 ```
 
-Anywhere outside container you can create instance of the service with `app()` method:
+Anywhere outside container you can create instance of the service with `app()` helper:
 
 ```php
 $currencyService = app('currencylayer');
