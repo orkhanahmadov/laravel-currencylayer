@@ -42,7 +42,7 @@ You can find your access key in [Currencylayer Dashboard](https://currencylayer.
 
 ## Configuration
 
-After publishing configuration file it will be available here: `app/config/currencylayer.php`
+After publishing configuration file it will be available in `config` directory as `currencylayer.php`
 
 It has following settings:
 
