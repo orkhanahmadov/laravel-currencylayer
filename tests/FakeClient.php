@@ -11,6 +11,11 @@ use Orkhanahmadov\Currencylayer\Data\Timeframe;
 class FakeClient implements Client
 {
     /**
+     * @var \DateTimeImmutable|string
+     */
+    private $date;
+
+    /**
      * @param string $fileName
      *
      * @return array
@@ -47,6 +52,8 @@ class FakeClient implements Client
      */
     public function date($date): Client
     {
+        $this->date = $date;
+
         return $this;
     }
 
@@ -75,6 +82,10 @@ class FakeClient implements Client
      */
     public function quotes(): Quotes
     {
+        if ($this->date) {
+            return new Quotes($this->jsonFixture('historical'));
+        }
+
         return new Quotes($this->jsonFixture('live'));
     }
 
