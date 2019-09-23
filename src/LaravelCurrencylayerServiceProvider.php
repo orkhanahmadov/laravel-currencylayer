@@ -20,8 +20,10 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->app->bind(Client::class, static function () {
-            // todo: add https config
-            return new CurrencylayerClient(config('currencylayer.access_key'));
+            return new CurrencylayerClient(
+                config('currencylayer.access_key'),
+                config('currencylayer.https_connection')
+            );
         });
         $this->app->bind(CurrencyService::class, Currencylayer::class);
 
@@ -49,8 +51,10 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'currencylayer');
 
         $this->app->singleton('currencylayer', static function () {
-            // todo: add https config
-            return new Currencylayer(new CurrencylayerClient(config('currencylayer.access_key')));
+            return new Currencylayer(new CurrencylayerClient(
+                config('currencylayer.access_key'),
+                config('currencylayer.https_connection')
+            ));
         });
 
         if ($this->app->runningInConsole()) {

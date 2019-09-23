@@ -40,6 +40,15 @@ CURRENCYLAYER_ACCESS_KEY=your-key-here
 
 You can find your access key in [Currencylayer Dashboard](https://currencylayer.com/dashboard).
 
+## Configuration
+
+After publishing configuration file it will be available here: `app/config/currencylayer.php`
+
+It has following settings:
+
+* `access_key` - currencylayer.com access key, by default uses value from `.env` file
+* `https_connection` - if set to `true` all calls to currencylayer API endpoint will be over HTTPS, instead of default HTTP
+
 ## Usage
 
 You can type-hint `Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService` to inject it from container:

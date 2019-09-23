@@ -79,6 +79,7 @@ class FakeClient implements Client
 
     /**
      * @return Quotes
+     * @throws \Exception
      */
     public function quotes(): Quotes
     {
