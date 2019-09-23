@@ -4,23 +4,24 @@ namespace Orkhanahmadov\LaravelCurrencylayer;
 
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
-use OceanApplications\currencylayer\client;
+use Orkhanahmadov\Currencylayer\Client;
+use Orkhanahmadov\Currencylayer\Data\Quotes;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
 
 class Currencylayer implements CurrencyService
 {
     /**
-     * @var client
+     * @var Client
      */
     private $client;
 
     /**
      * Currencylayer constructor.
      *
-     * @param client $client
+     * @param Client $client
      */
-    public function __construct(client $client)
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
@@ -38,9 +39,9 @@ class Currencylayer implements CurrencyService
             $source = Currency::firstOrCreate(['code' => $source]);
         }
 
-        $apiResponse = $this->apiRates($source, $currencies);
+        $apiData = $this->apiRates($source, $currencies);
 
-        $rates = $this->createRates($source, $apiResponse['quotes'], $apiResponse['timestamp']);
+        $rates = $this->createRates($source, $apiData->getQuotes(), $apiData->getTimestamp());
 
         return count($currencies) === 1 ? array_values($rates)[0] : $rates;
     }
@@ -62,9 +63,9 @@ class Currencylayer implements CurrencyService
             $date = Carbon::parse($date);
         }
 
-        $apiResponse = $this->apiRates($source, $currencies, $date);
+        $apiData = $this->apiRates($source, $currencies, $date);
 
-        $rates = $this->createRates($source, $apiResponse['quotes'], $apiResponse['timestamp']);
+        $rates = $this->createRates($source, $apiData->getQuotes(), $apiData->getTimestamp());
 
         return count($currencies) === 1 ? array_values($rates)[0] : $rates;
     }
@@ -122,12 +123,15 @@ class Currencylayer implements CurrencyService
      * @param array<string> $currencies
      * @param Carbon|null $date
      *
-     * @return array<mixed>
+     * @return Quotes
      */
-    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): array
+    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): Quotes
     {
         $client = $this->client->source($source->code)->currencies(implode(',', $currencies));
+        if ($date) {
+            $client->date($date->format('Y-m-d'));
+        }
 
-        return $date ? $client->date($date->format('Y-m-d'))->historical() : $client->live();
+        return $client->quotes();
     }
 }

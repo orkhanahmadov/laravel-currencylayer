@@ -3,7 +3,8 @@
 namespace Orkhanahmadov\LaravelCurrencylayer;
 
 use Illuminate\Support\ServiceProvider;
-use OceanApplications\currencylayer\client;
+use Orkhanahmadov\Currencylayer\Client;
+use Orkhanahmadov\Currencylayer\CurrencylayerClient;
 use Orkhanahmadov\LaravelCurrencylayer\Commands\LiveCommand;
 use Orkhanahmadov\LaravelCurrencylayer\Commands\RateCommand;
 use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
@@ -18,8 +19,9 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(client::class, static function () {
-            return new client(config('currencylayer.access_key'));
+        $this->app->bind(Client::class, static function () {
+            // todo: add https config
+            return new CurrencylayerClient(config('currencylayer.access_key'));
         });
         $this->app->bind(CurrencyService::class, Currencylayer::class);
 
@@ -47,7 +49,8 @@ class LaravelCurrencylayerServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'currencylayer');
 
         $this->app->singleton('currencylayer', static function () {
-            return new Currencylayer(new client(config('currencylayer.access_key')));
+            // todo: add https config
+            return new Currencylayer(new CurrencylayerClient(config('currencylayer.access_key')));
         });
 
         if ($this->app->runningInConsole()) {

@@ -2,7 +2,7 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests\Commands;
 
-use OceanApplications\currencylayer\client;
+use Orkhanahmadov\Currencylayer\Client;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Tests\TestCase;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
@@ -33,7 +33,7 @@ class RateCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->app->bind(client::class, function () {
+        $this->app->bind(Client::class, function () {
             return new FakeClient();
         });
     }

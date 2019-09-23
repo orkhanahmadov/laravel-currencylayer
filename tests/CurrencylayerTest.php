@@ -3,7 +3,7 @@
 namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
 use Carbon\Carbon;
-use OceanApplications\currencylayer\client;
+use Orkhanahmadov\Currencylayer\Client;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
@@ -69,17 +69,17 @@ class CurrencylayerTest extends TestCase
         $this->assertSame(2, Rate::count());
     }
 
-    public function testRateForWithSingleTarget()
+    public function testRateWithSingleTarget()
     {
         $this->assertSame(0, Currency::count());
         $this->assertSame(0, Rate::count());
 
         $rate = $this->service->rate('USD', Carbon::today(), 'AED');
 
-        $this->assertSame(3.67266, $rate);
+        $this->assertSame(3.673103, $rate);
     }
 
-    public function testRateForWithMultipleTargets()
+    public function testRateWithMultipleTargets()
     {
         $this->assertSame(0, Currency::count());
         $this->assertSame(0, Rate::count());
@@ -87,8 +87,8 @@ class CurrencylayerTest extends TestCase
         $rates = $this->service->rate('USD', Carbon::today()->format('Y-m-d'), 'AED', 'AMD');
 
         $this->assertTrue(is_array($rates));
-        $this->assertSame(3.67266, $rates['AED']);
-        $this->assertSame(475.798293, $rates['AMD']);
+        $this->assertSame(3.673103, $rates['AED']);
+        $this->assertSame(476.340291, $rates['AMD']);
         $this->assertSame(3, Currency::count());
         $this->assertSame(2, Rate::count());
     }
@@ -97,7 +97,7 @@ class CurrencylayerTest extends TestCase
     {
         parent::setUp();
 
-        $this->app->bind(client::class, function () {
+        $this->app->bind(Client::class, function () {
             return new FakeClient();
         });
 

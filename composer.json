@@ -26,7 +26,7 @@
         "illuminate/database": "5.8.*|^6.0",
         "illuminate/support": "5.8.*|^6.0",
         "nesbot/carbon": "^2.24",
-        "oceanapplications/currencylayer-php-client": "^1.4"
+        "orkhanahmadov/currencylayer": "dev-master"
     },
     "require-dev": {
         "orchestra/testbench": "3.8.*|^4.0",
