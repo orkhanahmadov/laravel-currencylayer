@@ -77,7 +77,7 @@ class FakeClient implements Client
      */
     public function convert($amount): Conversion
     {
-        // TODO: Implement convert() method.
+        //
     }
 
     /**
@@ -88,7 +88,7 @@ class FakeClient implements Client
      */
     public function timeframe($startDate, $endDate): Timeframe
     {
-        // TODO: Implement timeframe() method.
+        //
     }
 
     /**
@@ -99,7 +99,7 @@ class FakeClient implements Client
      */
     public function change($startDate, $endDate): Change
     {
-        // TODO: Implement change() method.
+        //
     }
 
     /**
@@ -107,6 +107,6 @@ class FakeClient implements Client
      */
     public function list(): array
     {
-        // TODO: Implement list() method.
+        //
     }
 }
