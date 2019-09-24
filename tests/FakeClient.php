@@ -4,9 +4,9 @@ namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
 use Orkhanahmadov\Currencylayer\Client;
 use Orkhanahmadov\Currencylayer\Data\Change;
-use Orkhanahmadov\Currencylayer\Data\Conversion;
 use Orkhanahmadov\Currencylayer\Data\Quotes;
 use Orkhanahmadov\Currencylayer\Data\Timeframe;
+use Orkhanahmadov\Currencylayer\Data\Conversion;
 
 class FakeClient implements Client
 {
