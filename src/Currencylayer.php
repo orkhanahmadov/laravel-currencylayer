@@ -48,7 +48,7 @@ class Currencylayer implements CurrencyService
 
     /**
      * @param Currency|string $source
-     * @param Carbon|string $date
+     * @param \DateTimeInterface|string $date
      * @param array<string>|string ...$currencies
      *
      * @return array<float>|float
@@ -59,7 +59,7 @@ class Currencylayer implements CurrencyService
         if (! $source instanceof Currency) {
             $source = Currency::firstOrCreate(['code' => $source]);
         }
-        if (! $date instanceof Carbon) {
+        if (! $date instanceof \DateTimeInterface) {
             $date = Carbon::parse($date);
         }
 
@@ -121,15 +121,15 @@ class Currencylayer implements CurrencyService
     /**
      * @param Currency $source
      * @param array<string> $currencies
-     * @param Carbon|null $date
+     * @param \DateTimeInterface|null $date
      *
      * @return Quotes
      */
-    private function apiRates(Currency $source, array $currencies, ?Carbon $date = null): Quotes
+    private function apiRates(Currency $source, array $currencies, ?\DateTimeInterface $date = null): Quotes
     {
-        $client = $this->client->source($source->code)->currencies(implode(',', $currencies));
+        $client = $this->client->source($source->code)->currency($currencies);
         if ($date) {
-            $client->date($date->format('Y-m-d'));
+            $client->date($date);
         }
 
         return $client->quotes();

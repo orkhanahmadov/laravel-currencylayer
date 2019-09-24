@@ -11,7 +11,7 @@ use Orkhanahmadov\Currencylayer\Data\Timeframe;
 class FakeClient implements Client
 {
     /**
-     * @var \DateTimeImmutable|string
+     * @var \DateTimeInterface|string
      */
     private $date;
 
@@ -23,58 +23,6 @@ class FakeClient implements Client
     private function jsonFixture(string $fileName): array
     {
         return json_decode(file_get_contents(__DIR__.'/__fixtures__/'.$fileName.'.json'), true);
-    }
-
-    /**
-     * @param string $sourceCurrency
-     *
-     * @return $this
-     */
-    public function source(string $sourceCurrency): Client
-    {
-        return $this;
-    }
-
-    /**
-     * @param array<string>|string $currencies
-     *
-     * @return $this
-     */
-    public function currencies($currencies): Client
-    {
-        return $this;
-    }
-
-    /**
-     * @param \DateTimeImmutable|string $date
-     *
-     * @return $this
-     */
-    public function date($date): Client
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * @param \DateTimeImmutable|string $date
-     *
-     * @return $this
-     */
-    public function startDate($date): Client
-    {
-        return $this;
-    }
-
-    /**
-     * @param \DateTimeImmutable|string $date
-     *
-     * @return $this
-     */
-    public function endDate($date): Client
-    {
-        return $this;
     }
 
     /**
@@ -91,6 +39,38 @@ class FakeClient implements Client
     }
 
     /**
+     * @param string $sourceCurrency
+     *
+     * @return $this
+     */
+    public function source(string $sourceCurrency): Client
+    {
+        return $this;
+    }
+
+    /**
+     * @param array<string>|string $currency
+     *
+     * @return $this
+     */
+    public function currency($currency): Client
+    {
+        return $this;
+    }
+
+    /**
+     * @param \DateTimeInterface|string $date
+     *
+     * @return $this
+     */
+    public function date($date): Client
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
      * @param int|float $amount
      *
      * @return Conversion
@@ -101,18 +81,32 @@ class FakeClient implements Client
     }
 
     /**
+     * @param \DateTimeInterface|string $startDate
+     * @param \DateTimeInterface|string $endDate
+     *
      * @return Timeframe
      */
-    public function timeframe(): Timeframe
+    public function timeframe($startDate, $endDate): Timeframe
     {
         // TODO: Implement timeframe() method.
     }
 
     /**
+     * @param \DateTimeInterface|string $startDate
+     * @param \DateTimeInterface|string $endDate
+     *
      * @return Change
      */
-    public function change(): Change
+    public function change($startDate, $endDate): Change
     {
         // TODO: Implement change() method.
+    }
+
+    /**
+     * @return array
+     */
+    public function list(): array
+    {
+        // TODO: Implement list() method.
     }
 }
