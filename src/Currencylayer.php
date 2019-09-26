@@ -41,7 +41,7 @@ class Currencylayer implements CurrencyService
 
         $apiData = $this->apiRates($source, $currencies);
 
-        $rates = $this->createRates($source, $apiData->getQuotes(), $apiData->getTimestamp());
+        $rates = $this->createRates($source, $apiData->quotes(), $apiData->timestamp());
 
         return count($currencies) === 1 ? array_values($rates)[0] : $rates;
     }
@@ -65,7 +65,7 @@ class Currencylayer implements CurrencyService
 
         $apiData = $this->apiRates($source, $currencies, $date);
 
-        $rates = $this->createRates($source, $apiData->getQuotes(), $apiData->getTimestamp());
+        $rates = $this->createRates($source, $apiData->quotes(), $apiData->timestamp());
 
         return count($currencies) === 1 ? array_values($rates)[0] : $rates;
     }
