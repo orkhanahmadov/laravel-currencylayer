@@ -4,9 +4,9 @@ namespace Orkhanahmadov\LaravelCurrencylayer\Tests;
 
 use Carbon\Carbon;
 use Orkhanahmadov\Currencylayer\Client;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Currencylayer;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 
 class CurrencylayerTest extends TestCase
 {

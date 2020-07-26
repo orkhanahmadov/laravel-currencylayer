@@ -6,8 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Orkhanahmadov\Currencylayer\Client;
 use Orkhanahmadov\Currencylayer\Data\Quotes;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 use Orkhanahmadov\LaravelCurrencylayer\Contracts\CurrencyService;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
 
 class Currencylayer implements CurrencyService
 {

@@ -2,8 +2,8 @@
 
 namespace Orkhanahmadov\LaravelCurrencylayer\Commands;
 
-use Symfony\Component\Console\Helper\Table;
 use Illuminate\Console\Command as BaseCommand;
+use Symfony\Component\Console\Helper\Table;
 
 abstract class Command extends BaseCommand
 {

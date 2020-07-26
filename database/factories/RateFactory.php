@@ -2,8 +2,8 @@
 
 use Carbon\Carbon;
 use Faker\Generator as Faker;
-use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 use Orkhanahmadov\LaravelCurrencylayer\Models\Currency;
+use Orkhanahmadov\LaravelCurrencylayer\Models\Rate;
 
 /*
  * @var \Illuminate\Database\Eloquent\Factory $factory
